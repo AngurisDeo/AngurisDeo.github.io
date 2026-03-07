@@ -5,9 +5,11 @@ import VolunteerDemo from "./demos/VolunteerDemo";
 import CasinoDemo from "./demos/CasinoDemo";
 import MobileDemo from "./demos/MobileDemo";
 import YouTubeDemo from "./demos/YouTubeDemo";
+import AIJobAssistant from "./demos/AIJobAssistant";
 
 const PROJECTS = [
   { title: "Angofertil — Fertility Clinic", tech: ["React", "CSS3", "Node.js"], desc: "Live production website for a fertility clinic in Angola. Multilingual, fully responsive, with appointment flow and domain deployment.", icon: "🏥", color: "#00C9FF", liveUrl: "https://angofertil.com" },
+  { title: "AI Job Search Assistant", tech: ["Claude API", "React", "AI Agents"], desc: "Paste any job description and get instant fit analysis, resume tips, and interview prep — powered by Claude AI. Built for CareerNiche's vision of AI-driven career support.", icon: "🤖", color: "#00FFB2", Demo: AIJobAssistant },
   { title: "E-Commerce Platform", tech: ["React", "MongoDB", "REST API"], desc: "Full-stack shop with cart, wishlist, filters, sorting and checkout flow.", icon: "🛒", color: "#FF6B35", Demo: EcommerceDemo },
   { title: "Snake Game", tech: ["React", "Canvas API", "Hooks"], desc: "Fully playable Snake — arrow keys, speed modes, high score, game over screen.", icon: "🐍", color: "#00FFB2", Demo: SnakeGame },
   { title: "Volunteer Manager", tech: ["React", "MongoDB", "Node.js"], desc: "Full CRUD app — add volunteers, track hours, view profiles, stats dashboard.", icon: "🤝", color: "#FF9671", Demo: VolunteerDemo },
@@ -36,7 +38,7 @@ const FAMILIAR = [
   "Business for IT", "Agile / Scrum", "Project Management",
   "Business Analysis", "Requirements Gathering", "Cross-functional Collaboration",
   "TCP/IP Fundamentals", "Data Communications", "Network Security",
-  "ChatGPT / Gemini", "AI-assisted Development", "Zapier / Albato",
+  "Claude API", "ChatGPT / Gemini", "AI-assisted Development", "Zapier / Albato",
   "WebStorm", "Visual Studio", "Android Studio", "Postman", "Figma",
 ];
 
@@ -67,6 +69,8 @@ export default function App() {
         .pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--a);transform:scaleX(0);transition:transform 0.3s ease;}
         .pcard:hover{border-color:#2E2E4E;transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.5);}
         .pcard:hover::before{transform:scaleX(1);}
+        .pcard.ai-card{border-color:#00FFB222;box-shadow:0 0 30px rgba(0,255,178,0.05);}
+        .pcard.ai-card:hover{border-color:#00FFB244;box-shadow:0 20px 40px rgba(0,255,178,0.1);}
         .badge{position:absolute;top:12px;right:12px;background:var(--a);color:#000;font-size:9px;padding:3px 8px;border-radius:10px;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:1px;opacity:0;transition:opacity 0.2s;}
         .pcard:hover .badge{opacity:1;}
         .sbar-o{background:#1A1A2E;border-radius:2px;height:4px;overflow:hidden;}
@@ -95,6 +99,8 @@ export default function App() {
         @keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
         .fam-tag{display:inline-block;font-size:10px;letter-spacing:1px;padding:5px 12px;border-radius:2px;border:1px solid #2A2A3E;color:#888;font-family:'Space Mono',monospace;transition:all 0.2s;cursor:default;}
         .fam-tag:hover{border-color:#00FFB244;color:#00FFB2;}
+        .ai-glow{animation:aiGlow 3s ease-in-out infinite;}
+        @keyframes aiGlow{0%,100%{box-shadow:0 0 20px rgba(0,255,178,0.05)}50%{box-shadow:0 0 40px rgba(0,255,178,0.12)}}
       `}</style>
 
         <div className="grid-bg" />
@@ -126,7 +132,7 @@ export default function App() {
                 <button onClick={() => setSection("about")} style={{ background: "transparent", color: "#E8E8F0", border: "1px solid #2A2A3E", padding: "14px 32px", fontFamily: "'Space Mono'", fontSize: 11, letterSpacing: 3, textTransform: "uppercase", cursor: "pointer", borderRadius: 2, transition: "border-color 0.2s,color 0.2s" }} onMouseOver={e => { e.target.style.borderColor = "#00FFB2"; e.target.style.color = "#00FFB2"; }} onMouseOut={e => { e.target.style.borderColor = "#2A2A3E"; e.target.style.color = "#E8E8F0"; }}>About Me</button>
               </div>
               <div style={{ display: "flex", gap: 48, marginTop: 80, paddingTop: 40, borderTop: "1px solid #1A1A2A", flexWrap: "wrap" }}>
-                {[["6+", "Projects Built"], ["2", "AWS Certs"], ["4", "Languages"], ["Honor", "Roll Student"]].map(([num, label]) => (
+                {[["7+", "Projects Built"], ["2", "AWS Certs"], ["4", "Languages"], ["Honor", "Roll Student"]].map(([num, label]) => (
                     <div key={label}>
                       <div style={{ fontFamily: "'Syne'", fontWeight: 800, fontSize: 28, color: "#00FFB2" }}>{num}</div>
                       <div style={{ fontFamily: "'Space Mono'", fontSize: 10, letterSpacing: 2, color: "#555", textTransform: "uppercase", marginTop: 4 }}>{label}</div>
@@ -159,13 +165,16 @@ export default function App() {
                         </div>
                       </a>
                   ) : (
-                      <div key={i} className="pcard" style={{ "--a": p.color }} onClick={() => setActiveProject(p)}>
+                      <div key={i} className={`pcard${p.title.includes("AI Job") ? " ai-card ai-glow" : ""}`} style={{ "--a": p.color }} onClick={() => setActiveProject(p)}>
                         <span className="badge">LAUNCH ↗</span>
-                        <div style={{ fontSize: 32, marginBottom: 16 }}>{p.icon}</div>
+                        {p.title.includes("AI Job") && (
+                            <div style={{ position: "absolute", top: 12, left: 12, fontFamily: "'Space Mono'", fontSize: 8, letterSpacing: 2, color: "#00FFB2", border: "1px solid #00FFB244", padding: "3px 8px", borderRadius: 2 }}>NEW · AI POWERED</div>
+                        )}
+                        <div style={{ fontSize: 32, marginBottom: 16, marginTop: p.title.includes("AI Job") ? 24 : 0 }}>{p.icon}</div>
                         <h3 style={{ fontFamily: "'Syne'", fontWeight: 700, fontSize: 18, marginBottom: 10, color: "#E8E8F0" }}>{p.title}</h3>
                         <p style={{ fontFamily: "'Space Mono'", fontSize: 11, color: "#666", lineHeight: 1.7, marginBottom: 18 }}>{p.desc}</p>
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                          {p.tech.map(t => <span key={t} className="tag">{t}</span>)}
+                          {p.tech.map(t => <span key={t} className="tag" style={t === "Claude API" ? { borderColor: "#00FFB244", color: "#00FFB2" } : {}}>{t}</span>)}
                         </div>
                       </div>
                   )
@@ -194,7 +203,7 @@ export default function App() {
             <div style={{ marginTop: 60 }}>
               <p style={{ fontFamily: "'Space Mono'", fontSize: 11, letterSpacing: 3, color: "#555", marginBottom: 20, textTransform: "uppercase" }}>Also familiar with</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-                {FAMILIAR.map(t => <span key={t} className="fam-tag">{t}</span>)}
+                {FAMILIAR.map(t => <span key={t} className="fam-tag" style={t === "Claude API" ? { borderColor: "#00FFB244", color: "#00FFB2" } : {}}>{t}</span>)}
               </div>
             </div>
           </div>
@@ -313,7 +322,7 @@ export default function App() {
         {/* MODAL */}
         {activeProject && (
             <div className="modal-bg" onClick={e => e.target === e.currentTarget && setActiveProject(null)}>
-              <div className="modal">
+              <div className="modal" style={activeProject.title.includes("AI Job") ? { borderColor: "#00FFB233" } : {}}>
                 <div className="mhead" style={{ borderLeft: `3px solid ${activeProject.color}` }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     <span style={{ fontSize: 20 }}>{activeProject.icon}</span>
