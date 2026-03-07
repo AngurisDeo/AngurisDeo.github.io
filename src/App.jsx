@@ -7,6 +7,7 @@ import MobileDemo from "./demos/MobileDemo";
 import YouTubeDemo from "./demos/YouTubeDemo";
 import AIJobAssistant from "./demos/AIJobAssistant";
 
+
 const PROJECTS = [
   { title: "Angofertil — Fertility Clinic", tech: ["React", "CSS3", "Node.js"], desc: "Live production website for a fertility clinic in Angola. Multilingual, fully responsive, with appointment flow and domain deployment.", icon: "🏥", color: "#00C9FF", liveUrl: "https://angofertil.com" },
   { title: "AI Job Search Assistant", tech: ["Claude API", "React", "AI Agents"], desc: "Paste any job description and get instant fit analysis, resume tips, and interview prep — powered by Claude AI. Built for CareerNiche's vision of AI-driven career support.", icon: "🤖", color: "#00FFB2", Demo: AIJobAssistant },

@@ -34,7 +34,7 @@ export default function AIJobAssistant() {
 Keep responses concise, direct, and useful. Use short paragraphs. Use → for bullet points. No fluff.`;
         const prompt = `Here is the job description I want to analyze:\n\n${jobDesc}\n\nGive me your analysis.`;
         try {
-            const response = await fetch("https://api.anthropic.com/v1/messages", {
+            const response = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -72,7 +72,7 @@ Keep responses concise, direct, and useful. Use short paragraphs. Use → for bu
         setMessages(updatedMessages);
         const systemPrompt = `You are a sharp, direct career advisor. Keep answers concise and actionable. Use → for bullets. No fluff.`;
         try {
-            const response = await fetch("https://api.anthropic.com/v1/messages", {
+            const response = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
